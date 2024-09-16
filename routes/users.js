@@ -10,8 +10,6 @@ router.post("/signup", async (req, res) => {
     if (user) throw new Error("User already exist");
 
     const newUser = await new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 10),
       token: uid2(32),
