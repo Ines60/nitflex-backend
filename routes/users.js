@@ -29,4 +29,26 @@ router.get("/", async (req, res) => {
   }
 });
 
+// se connecter
+router.post("/signin", async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) throw new Error("User not found");
+
+    // Vérification du mot de passe
+    const isPasswordCorrect = bcrypt.compareSync(
+      req.body.password,
+      user.password
+    );
+
+    if (!isPasswordCorrect) {
+      throw new Error("Password is incorrect");
+    }
+
+    res.json({ result: true, user });
+  } catch (err) {
+    res.json({ result: false, error: err.message });
+  }
+});
+
 module.exports = router;
