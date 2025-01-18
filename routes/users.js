@@ -30,6 +30,10 @@ router.get("/", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+=======
+// se connecter
+>>>>>>> 03b70a859d18b19ddcc2e62860834efda49c96fa
 router.post("/signin", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
