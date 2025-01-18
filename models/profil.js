@@ -6,6 +6,7 @@ const profilSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  avatarSeed: { type: String, required: true },
 });
 
 const Profil = mongoose.model("profils", profilSchema);

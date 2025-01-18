@@ -4,6 +4,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const uid2 = require("uid2");
 
+// s'inscrire
 router.post("/signup", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -24,6 +25,27 @@ router.get("/", async (req, res) => {
   try {
     const users = await User.find();
     res.json({ result: true, users });
+  } catch (err) {
+    res.json({ result: false, error: err.message });
+  }
+});
+
+router.post("/signin", async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user) throw new Error("User not found");
+
+    // Vérification du mot de passe
+    const isPasswordCorrect = bcrypt.compareSync(
+      req.body.password,
+      user.password
+    );
+
+    if (!isPasswordCorrect) {
+      throw new Error("Password is incorrect");
+    }
+
+    res.json({ result: true, user });
   } catch (err) {
     res.json({ result: false, error: err.message });
   }
